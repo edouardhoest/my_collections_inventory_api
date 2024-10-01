@@ -15,10 +15,6 @@ public class Data {
     public final String url;
     @JsonProperty("images")
     public final Images images;
-    @JsonProperty("approved")
-    public final boolean approved;
-    @JsonProperty("titles")
-    public final Title[] titles;
     @JsonProperty("title")
     public final String title;
     @JsonProperty("title_english")
@@ -37,12 +33,8 @@ public class Data {
     public final boolean publishing;
     @JsonProperty("published")
     public final Published published;
-    @JsonProperty("favorites")
-    public final int favorites;
     @JsonProperty("synopsis")
     public final String synopsis;
-    @JsonProperty("background")
-    public final String background;
     @JsonProperty("authors")
     public final Author[] authors;
     @JsonProperty("genres")

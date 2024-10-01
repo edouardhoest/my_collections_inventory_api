@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MyCollectorInventoryApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MyCollectorInventoryApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MyCollectorInventoryApplication.class, args);
+    }
 
 }

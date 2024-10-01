@@ -3,15 +3,21 @@ package com.collector.my_collector_inventory.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MangaDTO {
+@Getter
+public class ListMangaDTO {
     @JsonProperty("data")
-    public final Data data;
+    private final List<Data> data;
+    @JsonProperty("pagination")
+    private final Pagination pagination;
 
     @RequiredArgsConstructor
     @NoArgsConstructor(force = true)
