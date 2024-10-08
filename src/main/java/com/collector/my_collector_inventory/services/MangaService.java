@@ -32,6 +32,7 @@ public class MangaService {
         return mangaRepository.findMangaEntitiesByTitle(title);
     }
 
+
     public void deleteById(Long id) {
         mangaRepository.deleteById(id);
     }

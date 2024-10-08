@@ -19,5 +19,6 @@ public class MangaEntity {
     private String description;
     private String imageUrl;
     private String categories;
+    private String note;
 
 }

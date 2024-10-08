@@ -1,8 +1,5 @@
 package com.collector.my_collector_inventory;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -24,7 +21,7 @@ public class PasswordHasher {
             String hashBase64 = Base64.getEncoder().encodeToString(hashedPassword);
             return saltBase64 + ":" + hashBase64;
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Erreur lors du hashage du mot de passe", e);
+            throw new RuntimeException("Hash failed", e);
         }
     }
 
@@ -40,7 +37,7 @@ public class PasswordHasher {
 
             return MessageDigest.isEqual(storedHash, providedHash);
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Erreur lors de la vérification du mot de passe", e);
+            throw new RuntimeException("Verification failed", e);
         }
     }
 }

@@ -23,4 +23,9 @@ public class MangaController {
     public MangaEntity getSingleManga(@PathVariable Integer idManga) throws IOException {
         return mangaService.findById(idManga.longValue());
     }
+
+    @GetMapping("/top")
+    public void getTopTenManga(){
+        // TODO return mangaService.getTopTen();
+    }
 }
