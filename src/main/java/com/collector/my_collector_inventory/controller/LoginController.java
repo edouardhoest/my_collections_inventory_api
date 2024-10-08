@@ -1,14 +1,12 @@
 package com.collector.my_collector_inventory.controller;
 
 import com.collector.my_collector_inventory.PasswordHasher;
+import com.collector.my_collector_inventory.entities.UserInformation;
 import com.collector.my_collector_inventory.exception.UserAlreadyFoundException;
 import com.collector.my_collector_inventory.exception.UserDoesNotExistsException;
-import com.collector.my_collector_inventory.entities.UserEntity;
 import com.collector.my_collector_inventory.services.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/login")
@@ -18,32 +16,32 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping
-    public boolean getSingleManga(@RequestBody UserEntity requestedUserEntity) throws IOException {
-        UserEntity userEntity = loginService.findByName(requestedUserEntity.getUsername());
-        if (userEntity == null) {
-            throw new UserDoesNotExistsException(requestedUserEntity.getUsername());
+    public boolean getUserInformations(@RequestBody UserInformation requestedUserInformation) {
+        UserInformation userInformation = loginService.findByUsername(requestedUserInformation.getUsername());
+        if (userInformation == null) {
+            throw new UserDoesNotExistsException(requestedUserInformation.getUsername());
         }
-        return PasswordHasher.verifyPassword(requestedUserEntity.getPassword(), userEntity.getPassword());
+        return PasswordHasher.verifyPassword(userInformation.getPassword(), requestedUserInformation.getPassword());
     }
 
-    @PostMapping
-    public void addUser(@RequestBody UserEntity requestedUserEntity) {
-        UserEntity userEntity = loginService.findByName(requestedUserEntity.getUsername());
-        if (userEntity != null) {
-            throw new UserAlreadyFoundException(userEntity.getUsername());
+    @PostMapping("/add")
+    public void addUser(@RequestBody UserInformation requestedUserInformation) {
+        UserInformation userInformation = loginService.findByUsername(requestedUserInformation.getUsername());
+        if (userInformation != null) {
+            throw new UserAlreadyFoundException(userInformation.getUsername());
         }
 
-        loginService.registerUser(requestedUserEntity);
+        loginService.registerUser(requestedUserInformation);
     }
 
-    @PostMapping
-    public void deleteUser(@RequestBody UserEntity requestedUserEntity) throws Exception {
-        UserEntity userEntity = loginService.findByName(requestedUserEntity.getUsername());
-        if (userEntity == null) {
-            throw new UserDoesNotExistsException(requestedUserEntity.getUsername());
+    @PostMapping("/delete")
+    public void deleteUser(@RequestBody UserInformation requestedUserInformation) throws Exception {
+        UserInformation userInformation = loginService.findByUsername(requestedUserInformation.getUsername());
+        if (userInformation == null) {
+            throw new UserDoesNotExistsException(requestedUserInformation.getUsername());
         }
-        if (!PasswordHasher.verifyPassword(requestedUserEntity.getPassword(), userEntity.getPassword())) {
-            loginService.deleteById(userEntity.getId());
+        if (PasswordHasher.verifyPassword(userInformation.getPassword(), requestedUserInformation.getPassword())) {
+            loginService.deleteById(userInformation.getId());
         } else {
             throw new Exception("Password is incorrect");
         }

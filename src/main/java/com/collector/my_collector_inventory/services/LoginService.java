@@ -1,8 +1,8 @@
 package com.collector.my_collector_inventory.services;
 
 import com.collector.my_collector_inventory.PasswordHasher;
+import com.collector.my_collector_inventory.entities.UserInformation;
 import com.collector.my_collector_inventory.exception.UserAlreadyFoundException;
-import com.collector.my_collector_inventory.entities.UserEntity;
 import com.collector.my_collector_inventory.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,25 +12,25 @@ public class LoginService {
     @Autowired
     private UserRepository userRepository;
 
-    public void registerUser(UserEntity userEntity) throws UserAlreadyFoundException {
-        String hashedPassword = PasswordHasher.hashPassword(userEntity.getPassword());
-        save(UserEntity.builder().username(userEntity.getUsername()).password(hashedPassword).build());
+    public void registerUser(UserInformation userInformation) throws UserAlreadyFoundException {
+        String hashedPassword = PasswordHasher.hashPassword(userInformation.getPassword());
+        save(UserInformation.builder().username(userInformation.getUsername()).password(hashedPassword).build());
     }
 
-    public UserEntity save(UserEntity userEntity) {
-        return userRepository.save(userEntity);
+    public UserInformation save(UserInformation userInformation) {
+        return userRepository.save(userInformation);
     }
 
-    public UserEntity findById(Long id) {
+    public UserInformation findById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
-    public UserEntity update(UserEntity userEntity) {
-        return userRepository.save(userEntity);
+    public UserInformation update(UserInformation userInformation) {
+        return userRepository.save(userInformation);
     }
 
-    public UserEntity findByName(String name) {
-        return userRepository.findUserByName(name);
+    public UserInformation findByUsername(String username) {
+        return userRepository.findUserByUsername(username);
     }
 
     public void deleteById(Long id) {
