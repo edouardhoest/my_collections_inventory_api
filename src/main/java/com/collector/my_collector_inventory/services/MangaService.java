@@ -1,6 +1,6 @@
 package com.collector.my_collector_inventory.services;
 
-import com.collector.my_collector_inventory.entities.MangaEntity;
+import com.collector.my_collector_inventory.entities.Manga;
 import com.collector.my_collector_inventory.repositories.MangaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,24 +12,24 @@ public class MangaService {
     @Autowired
     private MangaRepository mangaRepository;
 
-    public MangaEntity save(MangaEntity mangaEntity) {
-        return mangaRepository.save(mangaEntity);
+    public Manga save(Manga manga) {
+        return mangaRepository.save(manga);
     }
 
-    public List<MangaEntity> findAll() {
+    public List<Manga> findAll() {
         return mangaRepository.findAll();
     }
 
-    public MangaEntity findById(Long id) {
+    public Manga findById(Long id) {
         return mangaRepository.findById(id).orElse(null);
     }
 
-    public MangaEntity update(MangaEntity mangaEntity) {
-        return mangaRepository.save(mangaEntity);
+    public Manga update(Manga manga) {
+        return mangaRepository.save(manga);
     }
 
-    public MangaEntity findByTitle(String title) {
-        return mangaRepository.findMangaEntitiesByTitle(title);
+    public Manga findByTitle(String title) {
+        return mangaRepository.findByTitle(title);
     }
 
 

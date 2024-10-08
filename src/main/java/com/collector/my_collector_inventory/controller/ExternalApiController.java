@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/manga")
+@RequestMapping("/externalManga")
 public class ExternalApiController {
 
     private final OkHttpClient client = new OkHttpClient();
@@ -44,7 +44,7 @@ public class ExternalApiController {
         }
     }
 
-    @GetMapping("/{idManga}")
+    @GetMapping("/id/{idManga}")
     public MangaDTO getSingleManga(@PathVariable Integer idManga) throws IOException {
         String url = "https://api.jikan.moe/v4/manga/" + idManga;
 
