@@ -1,10 +1,8 @@
 package com.collector.my_collector_inventory.controller;
 
-import com.collector.my_collector_inventory.dto.MangaData;
 import com.collector.my_collector_inventory.dto.ListMangaDTO;
 import com.collector.my_collector_inventory.dto.MangaDTO;
-import com.collector.my_collector_inventory.entities.Collection;
-import com.collector.my_collector_inventory.entities.Manga;
+import com.collector.my_collector_inventory.dto.MangaData;
 import com.collector.my_collector_inventory.services.MangaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
@@ -17,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/externalManga")
@@ -63,23 +58,9 @@ public class ExternalApiController {
                 throw new IOException("Unexpected code " + response);
             }
 
-            if (response.body() != null) {
-                ListMangaDTO mangas = mapper.readValue(response.body().byteStream(), ListMangaDTO.class);
-                List<Manga> formattedMangaList = mangas.getData().stream().map(
-                        data -> Manga.builder()
-                                .title(data.title)
-                                .authors(data.authors != null ? data.authors[0].name : "Manga as no author")
-                                .description(data.synopsis)
-                                .imageUrl(data.images.getJpg().imageUrl)
-                                .categories(data.genres != null ? data.genres[0].name : "Manga as no categories")
-                                .status(data.status)
-                                .build()
-                ).toList();
-                mangaService.saveAll(formattedMangaList);
-            }
+            mangaService.saveManga(response);
         }
     }
-
     @GetMapping("/id/{idManga}")
     public MangaDTO getSingleManga(@PathVariable Integer idManga) throws IOException {
         Request request = new Request.Builder()

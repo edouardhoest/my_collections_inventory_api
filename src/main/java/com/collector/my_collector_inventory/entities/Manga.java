@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.lang.reflect.Array;
-
 @Entity
 @Getter
 @Builder
@@ -24,7 +22,10 @@ public class Manga {
 
     @Column(length = 10000)
     private String description;
+    @Lob
+    private byte[] image;
     private String imageUrl;
+
     private String categories;
     private String status;
 }
