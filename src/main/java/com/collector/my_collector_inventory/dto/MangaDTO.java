@@ -3,15 +3,17 @@ package com.collector.my_collector_inventory.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MangaDTO {
     @JsonProperty("data")
-    public final Data data;
+    public final MangaData mangaData;
 
     @RequiredArgsConstructor
     @NoArgsConstructor(force = true)

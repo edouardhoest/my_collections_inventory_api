@@ -2,13 +2,16 @@ package com.collector.my_collector_inventory.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Data {
+public class MangaData {
     @JsonProperty("mal_id")
     public final int malId;
     @JsonProperty("url")
@@ -43,5 +46,6 @@ public class Data {
     public final Genre[] explicitGenres;
     @JsonProperty("themes")
     public final Theme[] themes;
+
 }
 

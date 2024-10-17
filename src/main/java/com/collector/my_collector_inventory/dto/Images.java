@@ -2,18 +2,21 @@ package com.collector.my_collector_inventory.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Getter
 public class Images {
     @JsonProperty("jpg")
     public final ImageFormat jpg;
     @JsonProperty("webp")
     public final ImageFormat webp;
 
+    @Getter
     @RequiredArgsConstructor
     @NoArgsConstructor(force = true)
     @JsonIgnoreProperties(ignoreUnknown = true)

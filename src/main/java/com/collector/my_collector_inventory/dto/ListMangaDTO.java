@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 public class ListMangaDTO {
     @JsonProperty("data")
-    private final List<Data> data;
+    private final List<MangaData> data;
     @JsonProperty("pagination")
     private final Pagination pagination;
 
