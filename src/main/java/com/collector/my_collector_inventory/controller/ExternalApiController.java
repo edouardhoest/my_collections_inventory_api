@@ -61,6 +61,7 @@ public class ExternalApiController {
             mangaService.saveManga(response);
         }
     }
+
     @GetMapping("/id/{idManga}")
     public MangaDTO getSingleManga(@PathVariable Integer idManga) throws IOException {
         Request request = new Request.Builder()
@@ -79,27 +80,5 @@ public class ExternalApiController {
             }
         }
     }
-
-    @GetMapping("/{name}")
-    public MangaDTO getSingleManga(@PathVariable String name) throws IOException {
-        // appel bdd pour recup id
-        int idManga = 1;//MangaRepository.getMangaByName(name);
-
-        Request request = new Request.Builder()
-                .url(EXTERNAL_API_URL + "/" + idManga)
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("Unexpected code " + response);
-            }
-
-            if (response.body() != null) {
-                return mapper.readValue(response.body().byteStream(), MangaDTO.class);
-            } else {
-                return new MangaDTO(new MangaData());
-            }
-        }
-    }
-
+    //TODO get manga by name
 }

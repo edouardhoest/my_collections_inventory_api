@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/manga")
@@ -32,10 +33,10 @@ public class MangaController {
         }
     }
 
-    @GetMapping("/top")
-    public void getTopTenManga() {
-        //TODO List<Manga> topManga = mangaService.getTopTen();
-        //TODO return ResponseEntity.ok(topManga);
+    @GetMapping("/top-ten")
+    public ResponseEntity<List<Manga>> getTopTenManga() {
+        List<Manga> topManga = mangaService.findTopTen();
+        return ResponseEntity.ok(topManga);
     }
 
     @GetMapping("/{idManga}/image")
