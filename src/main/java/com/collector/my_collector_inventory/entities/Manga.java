@@ -1,13 +1,11 @@
 package com.collector.my_collector_inventory.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,8 +20,7 @@ public class Manga {
 
     @Column(length = 10000)
     private String description;
-    @Lob
-    private byte[] image;
+
     private String imageUrl;
 
     private String categories;

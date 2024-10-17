@@ -4,6 +4,7 @@ import com.collector.my_collector_inventory.dto.ListMangaDTO;
 import com.collector.my_collector_inventory.entities.Manga;
 import com.collector.my_collector_inventory.repositories.MangaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,29 +35,29 @@ public class MangaService {
         if (response.body() != null) {
             ListMangaDTO mangas = mapper.readValue(response.body().byteStream(), ListMangaDTO.class);
             List<Manga> formattedMangaList = mangas.getData().stream().map(
-                    data -> {
-                        byte[] convertedImage = null;
-                        try {
-                            convertedImage = convertImageForSave(data.images.getJpg().imageUrl);
-                        } catch (IOException e) {
-                            log.error(e.getMessage());
-                        }
-                        return Manga.builder()
+                    data -> Manga.builder()
                                 .title(data.title)
                                 .authors(data.authors != null ? data.authors[0].name : "Manga as no author")
                                 .description(data.synopsis)
                                 .imageUrl(data.images.getJpg().imageUrl)
-                                .image(convertedImage)
                                 .categories(data.genres != null ? data.genres[0].name : "Manga as no categories")
                                 .status(data.status)
-                                .build();
-                    }
+                                .build()
             ).toList();
             mangaRepository.saveAll(formattedMangaList);
         }
     }
 
-    public byte[] convertImageForSave(String imageUrl) throws IOException {
+
+    public static String generateImageUrl(HttpServletRequest request, Long idManga) {
+        return request.getScheme() + "://" +
+                request.getServerName() +
+                ":" + request.getServerPort() +
+                "/mangas/" + idManga + "/image";
+    }
+
+
+    public byte[] getToBytesImage(String imageUrl) throws IOException {
         URL url = URI.create(imageUrl).toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
