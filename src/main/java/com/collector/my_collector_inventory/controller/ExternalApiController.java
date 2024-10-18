@@ -40,8 +40,7 @@ public class ExternalApiController {
             }
 
             if (response.body() != null) {
-                ListMangaDTO listMangaDTO = mapper.readValue(response.body().byteStream(), ListMangaDTO.class);
-                return listMangaDTO;
+                return mapper.readValue(response.body().byteStream(), ListMangaDTO.class);
             } else {
                 return new ListMangaDTO();
             }
@@ -50,16 +49,7 @@ public class ExternalApiController {
 
     @GetMapping("/load-manga")
     public void loadManga() throws IOException {
-        Request request = new Request.Builder()
-                .url(EXTERNAL_API_URL)
-                .build();
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("Unexpected code " + response);
-            }
-
-            mangaService.saveManga(response);
-        }
+        mangaService.saveManga();
     }
 
     @GetMapping("/id/{idManga}")
