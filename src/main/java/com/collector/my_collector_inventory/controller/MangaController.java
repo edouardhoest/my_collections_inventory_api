@@ -23,6 +23,12 @@ public class MangaController {
     @Autowired
     private MangaService mangaService;
 
+    @GetMapping("/all")
+    public ResponseEntity<List<Manga>> getMangaList(){
+        List<Manga> allMangas = mangaService.findAllMangas();
+        return ResponseEntity.ok(allMangas);
+    }
+
     @GetMapping("/{idManga}")
     public ResponseEntity<Manga> getSingleManga(@PathVariable Long idManga, HttpServletRequest request) {
         Manga manga = mangaService.findById(idManga);

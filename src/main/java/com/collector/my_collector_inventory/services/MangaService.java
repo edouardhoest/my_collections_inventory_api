@@ -34,6 +34,7 @@ public class MangaService {
     private final ObjectMapper mapper = new ObjectMapper();
     private final String EXTERNAL_API_URL = "https://api.jikan.moe/v4/manga";
 
+    public List<Manga> findAllMangas() {return mangaRepository.findAll();}
 
     public Manga findById(Long id) {
         return mangaRepository.findById(id).orElse(null);
