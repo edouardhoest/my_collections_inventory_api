@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS manga (
     author VARCHAR(1000) NOT NULL,
     description TEXT,
     imageUrl VARCHAR(1000),
-    image BLOB,
     categories VARCHAR(1000),
     status VARCHAR(500)
     );
