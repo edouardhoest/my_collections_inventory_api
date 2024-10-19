@@ -21,8 +21,8 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Service
@@ -34,10 +34,16 @@ public class MangaService {
     private final ObjectMapper mapper = new ObjectMapper();
     private final String EXTERNAL_API_URL = "https://api.jikan.moe/v4/manga";
 
-    public List<Manga> findAllMangas() {return mangaRepository.findAll();}
+    public List<Manga> findAllMangas() {
+        return mangaRepository.findAll();
+    }
 
     public Manga findById(Long id) {
         return mangaRepository.findById(id).orElse(null);
+    }
+
+    public List<Manga> findAllById(Long id) {
+        return mangaRepository.findAllById(Collections.singleton(id));
     }
 
     public List<Manga> findTopTen() {
@@ -67,7 +73,7 @@ public class MangaService {
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        } while (Objects.requireNonNull(mangas).getPagination().hasNextPage);
+        } while (i > 10); // Objects.requireNonNull(mangas).getPagination().hasNextPage
     }
 
     private static Manga mangaDataToMangaMapper(MangaData data) {
