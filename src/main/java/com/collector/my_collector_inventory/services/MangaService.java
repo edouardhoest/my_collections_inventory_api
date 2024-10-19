@@ -73,7 +73,7 @@ public class MangaService {
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        } while (i > 10); // Objects.requireNonNull(mangas).getPagination().hasNextPage
+        } while (i < 10); // Objects.requireNonNull(mangas).getPagination().hasNextPage
     }
 
     private static Manga mangaDataToMangaMapper(MangaData data) {
