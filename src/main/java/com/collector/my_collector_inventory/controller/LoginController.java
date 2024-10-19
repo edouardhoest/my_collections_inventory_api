@@ -6,7 +6,11 @@ import com.collector.my_collector_inventory.exception.UserAlreadyFoundException;
 import com.collector.my_collector_inventory.exception.UserDoesNotExistsException;
 import com.collector.my_collector_inventory.services.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/login")
@@ -16,22 +20,25 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping
-    public boolean getUserInformations(@RequestBody UserInformation requestedUserInformation) {
+    public ResponseEntity<Long> getUserInformations(@RequestBody UserInformation requestedUserInformation) throws Exception {
         UserInformation userInformation = loginService.findByUsername(requestedUserInformation.getUsername());
         if (userInformation == null) {
             throw new UserDoesNotExistsException(requestedUserInformation.getUsername());
         }
-        return PasswordHasher.verifyPassword(userInformation.getPassword(), requestedUserInformation.getPassword());
+        if(PasswordHasher.verifyPassword(userInformation.getPassword(), requestedUserInformation.getPassword())) {
+            return ResponseEntity.ok(userInformation.getId());
+        }else{
+            throw new Exception("Password is incorrect");
+        }
     }
 
     @PostMapping("/add")
-    public void addUser(@RequestBody UserInformation requestedUserInformation) {
+    public ResponseEntity<Long> addUser(@RequestBody UserInformation requestedUserInformation) {
         UserInformation userInformation = loginService.findByUsername(requestedUserInformation.getUsername());
         if (userInformation != null) {
             throw new UserAlreadyFoundException(userInformation.getUsername());
         }
-
-        loginService.registerUser(requestedUserInformation);
+        return ResponseEntity.ok(loginService.registerUser(requestedUserInformation));
     }
 
     @PostMapping("/delete")

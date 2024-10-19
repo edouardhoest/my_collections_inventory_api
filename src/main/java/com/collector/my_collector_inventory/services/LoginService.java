@@ -12,20 +12,13 @@ public class LoginService {
     @Autowired
     private UserRepository userRepository;
 
-    public void registerUser(UserInformation userInformation) throws UserAlreadyFoundException {
+    public Long registerUser(UserInformation userInformation) throws UserAlreadyFoundException {
         String hashedPassword = PasswordHasher.hashPassword(userInformation.getPassword());
-        save(UserInformation.builder().username(userInformation.getUsername()).password(hashedPassword).build());
+        UserInformation savedUser = save(UserInformation.builder().username(userInformation.getUsername()).password(hashedPassword).build());
+        return savedUser.getId();
     }
 
     public UserInformation save(UserInformation userInformation) {
-        return userRepository.save(userInformation);
-    }
-
-    public UserInformation findById(Long id) {
-        return userRepository.findById(id).orElse(null);
-    }
-
-    public UserInformation update(UserInformation userInformation) {
         return userRepository.save(userInformation);
     }
 
