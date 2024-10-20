@@ -26,4 +26,10 @@ public class CollectionController {
         collectionService.saveCollection(collection);
         return ResponseEntity.ok("Collection successfully added");
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<String> removeFromCollection(@RequestBody CollectionDTO collection) {
+        collectionService.deleteByIds(collection);
+        return ResponseEntity.ok("Collection successfully added");
+    }
 }

@@ -5,7 +5,6 @@ import com.collector.my_collector_inventory.entities.Collection;
 import com.collector.my_collector_inventory.entities.Manga;
 import com.collector.my_collector_inventory.repositories.CollectionRepository;
 import com.collector.my_collector_inventory.repositories.MangaRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +20,15 @@ public class CollectionService {
 
     @Autowired
     private MangaRepository mangaRepository;
-    private final ObjectMapper mapper = new ObjectMapper();
 
     public List<Manga> findById(Long id) {
         List<String> mangaIds = collectionRepository.findAllByUserId(id);
         return mangaRepository.findAllById(mangaIds.stream().map(Long::parseLong).toList());
+    }
+
+    public void deleteByIds(CollectionDTO collectionDTO) {
+        Collection collection = collectionDTOToCollectionMapper(collectionDTO);
+        collectionRepository.deleteAllByIds(collection.getIdUser(), collection.getIdManga());
     }
 
     public void saveCollection(CollectionDTO collection) {
